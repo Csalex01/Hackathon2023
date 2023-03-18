@@ -46,10 +46,6 @@ const map = new Map({
     target: 'map'
 });
 
-// map.on('postcompose', function (e) {
-//     document.querySelector('canvas').style.filter = "invert(100%)";
-// });
-
 let dataA = undefined
 let dataB = undefined
 
