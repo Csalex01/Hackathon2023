@@ -24,7 +24,7 @@ let markers = new VectorLayer({
     style: new Style({
         image: new Icon({
             anchor: [0.5, 1],
-            src: 'https://icons.iconarchive.com/icons/paomedia/small-n-flat/64/map-marker-icon.png'
+            src: 'https://icons.iconarchive.com/icons/paomedia/small-n-flat/32/map-marker-icon.png'
         })
     })
 });
@@ -49,4 +49,26 @@ map.on("click", (evt) => {
     let clicked_pos = epsg3857toEpsg4326(evt.coordinate)
     console.log(clicked_pos)
     markers.getSource().addFeature(new Feature(new Point(fromLonLat([clicked_pos[0], clicked_pos[1]]))));
+})
+
+let dataA = undefined
+let dataB = undefined
+
+document.getElementById("search-button").addEventListener("click", async () => {
+    let pointA = document.getElementsByName("point_A")[0].value
+    let pointB = document.getElementsByName("point_B")[0].value
+
+    const responseA = await fetch(`https://nominatim.openstreetmap.org/search.php?q=${pointA}&format=jsonv2`)
+    dataA = await responseA.json()
+    console.log(dataA)
+
+    const responseB = await fetch(`https://nominatim.openstreetmap.org/search.php?q=${pointB}&format=jsonv2`)
+    dataB = await responseB.json()
+    console.log(dataA)
+
+    if (dataA.length == 0 || dataB.length == 0)
+        return
+
+    markers.getSource().addFeature(new Feature(new Point(fromLonLat([dataA[0].lon, dataA[0].lat]))));
+    markers.getSource().addFeature(new Feature(new Point(fromLonLat([dataB[0].lon, dataB[0].lat]))));
 })

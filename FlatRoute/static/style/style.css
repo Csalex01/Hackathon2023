@@ -3,15 +3,9 @@
     padding: 0;
 }
 
-#preferences {
+#preferences, #search-box {
     display: block;
     position: absolute;
-
-    bottom: 20px;
-    left: 20px;
-
-    width: 500px;
-    height: 300px;
 
     background-color: rgba(255, 255, 255, 0.75);
 
@@ -21,21 +15,44 @@
     padding: 10px;
 
     box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.75);
-    
+
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
 
     text-align: center;
 }
 
+#preferences {
+    bottom: 20px;
+    left: 20px;
+
+    width: 500px;
+}
+
+#search-box {
+    bottom: 125px;
+    left: 20px;
+    width: 500px;
+}
+
+#search-box input {
+    width: 100%;
+    height: 30px;
+    padding: 5px;
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.75);
+}
+
 .home-button {
     top: 65px;
     left: .5em;
 }
+
 .radio-group {
     text-align: left;
 }
-  
+
 .radio-label {
     margin-left: 10px;
     font-weight: bold;
@@ -43,15 +60,9 @@
 }
 
 input[type="radio"] {
-    margin-right: 10px; 
-  }
+    margin-right: 10px;
+}
 
-  .radio-group label {
-    margin-right: 10px; 
-  }
-
-  
-  
-
-
-  
+.radio-group label {
+    margin-right: 10px;
+}
