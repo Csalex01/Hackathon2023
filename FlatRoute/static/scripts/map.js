@@ -9,10 +9,11 @@ import VectorSource from 'https://cdn.skypack.dev/ol/source/Vector.js';
 import { Style, Icon } from "https://cdn.skypack.dev/ol/style"
 
 import { Feature } from "https://cdn.skypack.dev/ol"
-import { Point } from "https://cdn.skypack.dev/ol/geom"
+
+import { Point, LineString } from "https://cdn.skypack.dev/ol/geom"
 
 import { fromLonLat, transform } from 'https://cdn.skypack.dev/ol/proj'
-import { Control, defaults as defaultControls } from "https://cdn.skypack.dev/ol/control"
+import { defaults as defaultControls } from "https://cdn.skypack.dev/ol/control"
 
 import "./utils.js"
 import { HomeButtonControl, mousePositionControl, epsg3857toEpsg4326 } from "./utils.js"
@@ -60,26 +61,42 @@ document.getElementById("search-button").addEventListener("click", async () => {
 
     const responseA = await fetch(`https://nominatim.openstreetmap.org/search.php?q=${pointA}&format=jsonv2`)
     dataA = await responseA.json()
-    console.log(dataA)
 
     const responseB = await fetch(`https://nominatim.openstreetmap.org/search.php?q=${pointB}&format=jsonv2`)
     dataB = await responseB.json()
-    console.log(dataA)
 
-    if (dataA.length == 0 || dataB.length == 0)
-        return
+    dataA = dataA[0]
+    dataB = dataB[0]
+
+    console.log(dataA)
+    console.log(dataB)
+
+    markers.getSource().addFeature(new Feature(new Point(fromLonLat([dataA.lon, dataA.lat]))));
+    markers.getSource().addFeature(new Feature(new Point(fromLonLat([dataB.lon, dataB.lat]))));
+
+    const midpoint = {
+        lat: (parseFloat(dataA.lat) + parseFloat(dataB.lat)) / 2,
+        lon: (parseFloat(dataA.lon) + parseFloat(dataB.lon)) / 2
+    }
+
+    const dist = Math.sqrt(
+        Math.pow(parseFloat(dataA.lat) - parseFloat(dataB.lat), 2) +
+        Math.pow(parseFloat(dataA.lon) - parseFloat(dataB.lon), 2)
+    )
+
+    console.log(`Distance: ${dist}`)
+
+    map.getView().setCenter(fromLonLat([midpoint.lon, midpoint.lat]))
+
+    var start_point = new Point(0, 10);
+    var end_point = new Point(30, 0);
+
+    let vector = new VectorLayer();
+    vector.addFeatures([new Feature.Vector(new LineString([start_point, end_point]))]);
+    map.addLayers([vector]);
 
     markers.getSource().addFeature(new Feature(new Point(fromLonLat([dataA[0].lon, dataA[0].lat]))));
     markers.getSource().addFeature(new Feature(new Point(fromLonLat([dataB[0].lon, dataB[0].lat]))));
 })
 
-function closePopup() {
-	document.querySelector('.popup').style.display = 'none';
-}
-
-window.onload = function() {
-	document.querySelector('.popup').style.display = 'flex';
-	
-	document.querySelector('button').addEventListener('click', closePopup);
-};
 
