@@ -1,12 +1,4 @@
-import Map from 'https://cdn.skypack.dev/ol/Map.js';
-import View from 'https://cdn.skypack.dev/ol/View.js'
-import OSM from 'https://cdn.skypack.dev/ol/source/OSM.js'
-import TileLayer from 'https://cdn.skypack.dev/ol/layer/Tile.js'
-
-import VectorLayer from 'https://cdn.skypack.dev/ol/layer/Vector.js';
-import VectorSource from 'https://cdn.skypack.dev/ol/source/Vector.js';
-
-import { Style, Icon } from "https://cdn.skypack.dev/ol/style"
+import * as ol from './ol*';
 
 import { Feature } from "https://cdn.skypack.dev/ol"
 import { Point } from "https://cdn.skypack.dev/ol/geom"
@@ -19,26 +11,26 @@ import { HomeButtonControl, mousePositionControl, epsg3857toEpsg4326 } from "./u
 
 const loc = JSON.parse(sessionStorage.getItem("current_location"))
 
-let markers = new VectorLayer({
-    source: new VectorSource(),
-    style: new Style({
-        image: new Icon({
+let markers = new ol.layer.Vector({
+    source: new ol.source.Vector(),
+    style: new ol.style.Style({
+        image: new ol.style.Icon({
             anchor: [0.5, 1],
             src: 'https://icons.iconarchive.com/icons/paomedia/small-n-flat/64/map-marker-icon.png'
         })
     })
 });
 
-const map = new Map({
-    controls: defaultControls().extend([
+const map = new ol.Map({
+    controls: ol.control.defaults().extend([
         new HomeButtonControl(),
         mousePositionControl
     ]),
     layers: [
-        new TileLayer({ source: new OSM() }),
+        new ol.layer.Tile({ source: new ol.source.OSM() }),
         markers
     ],
-    view: new View({
+    view: new ol.View({
         center: fromLonLat([loc.lon, loc.lat]),
         zoom: 15
     }),
