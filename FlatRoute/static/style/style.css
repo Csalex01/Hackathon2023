@@ -27,3 +27,8 @@
 
     text-align: center;
 }
+
+.home-button {
+    top: 65px;
+    left: .5em;
+}
