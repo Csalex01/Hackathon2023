@@ -46,27 +46,57 @@ const map = new Map({
     target: 'map'
 });
 
+let dataA = undefined
+let dataB = undefined
+
 map.on("click", (evt) => {
     let clicked_pos = epsg3857toEpsg4326(evt.coordinate)
     console.log(clicked_pos)
-    markers.getSource().addFeature(new Feature(new Point(fromLonLat([clicked_pos[0], clicked_pos[1]]))));
-})
 
-let dataA = undefined
-let dataB = undefined
+    if (document.getElementsByName("point_A")[0].value.length != 0 && document.getElementsByName("point_B")[0].value.length != 0)
+        return
+
+    markers.getSource().addFeature(new Feature(new Point(fromLonLat([clicked_pos[0], clicked_pos[1]]))));
+
+    if (document.getElementsByName("point_A")[0].value.length == 0 && document.getElementsByName("point_B")[0].value.length == 0) {
+        document.getElementsByName("point_A")[0].value = clicked_pos
+        dataA = clicked_pos
+        return
+    }
+
+    if (document.getElementsByName("point_A")[0].value.length != 0 && document.getElementsByName("point_B")[0].value.length == 0) {
+        document.getElementsByName("point_B")[0].value = clicked_pos
+        dataB = clicked_pos
+        return
+    }
+
+})
 
 document.getElementById("search-button").addEventListener("click", async () => {
     let pointA = document.getElementsByName("point_A")[0].value
     let pointB = document.getElementsByName("point_B")[0].value
 
-    const responseA = await fetch(`https://nominatim.openstreetmap.org/search.php?q=${pointA}&format=jsonv2`)
-    dataA = await responseA.json()
+    if (dataA == undefined || dataB == undefined) {
 
-    const responseB = await fetch(`https://nominatim.openstreetmap.org/search.php?q=${pointB}&format=jsonv2`)
-    dataB = await responseB.json()
+        const responseA = await fetch(`https://nominatim.openstreetmap.org/search.php?q=${pointA}&format=jsonv2`)
+        dataA = await responseA.json()
 
-    dataA = dataA[0]
-    dataB = dataB[0]
+        const responseB = await fetch(`https://nominatim.openstreetmap.org/search.php?q=${pointB}&format=jsonv2`)
+        dataB = await responseB.json()
+
+        dataA = dataA[0]
+        dataB = dataB[0]
+    } else {
+        dataA = {
+            lon: dataA[0],
+            lat: dataA[1]
+        }
+
+        dataB = {
+            lon: dataB[0],
+            lat: dataB[1]
+        }
+    }
 
     console.log(dataA)
     console.log(dataB)
@@ -115,12 +145,9 @@ document.getElementById("search-button").addEventListener("click", async () => {
     var vectorLineLayer = new VectorLayer({
         source: vectorLine,
         style: new Style({
-            fill: new Fill({ color: '#FF0000', weight: 4 }),
             stroke: new Stroke({ color: '#FF0000', width: 4 })
         })
     });
 
     map.addLayer(vectorLineLayer);
 })
-
-
