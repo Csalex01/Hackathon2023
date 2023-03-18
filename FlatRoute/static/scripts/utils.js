@@ -4,8 +4,14 @@ import { createStringXY } from './ol/coordinate.js';
 import { fromLonLat } from './ol/proj.js'
 
 document.querySelector(".closeButton").addEventListener("click", () => {
-    document.querySelector(".popup").style.display = "none"
-})
+    console.log("Button clicked");
+    document.querySelector(".popup").style.display = "none";
+    document.querySelector(".popup2").style.display = "flex";
+    setTimeout(() => {
+      document.querySelector(".popup2").style.display = "none";
+    }, 2000);
+  });
+  
 
 class HomeButtonControl extends Control {
     constructor(opt_options) {
