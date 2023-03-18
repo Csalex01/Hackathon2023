@@ -46,6 +46,10 @@ const map = new Map({
     target: 'map'
 });
 
+// map.on('postcompose', function (e) {
+//     document.querySelector('canvas').style.filter = "invert(100%)";
+// });
+
 let dataA = undefined
 let dataB = undefined
 
@@ -145,7 +149,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
     var vectorLineLayer = new VectorLayer({
         source: vectorLine,
         style: new Style({
-            stroke: new Stroke({ color: '#FF0000', width: 4 })
+            stroke: new Stroke({ color: '#FF00FF', width: 4 })
         })
     });
 
