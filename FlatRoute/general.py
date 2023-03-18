@@ -16,11 +16,14 @@ def find_route():
     point_b = json.loads(request.args.get("point_b"))
 
     coords = [
-        (point_a["lat"], point_a["lon"]),
-        (point_b["lat"], point_b["lon"])
+        (point_a["lon"], point_a["lat"]),
+        (point_b["lon"], point_b["lat"])
     ]
 
     client = ors.Client('5b3ce3597851110001cf62489e4d077cabd84d33bf9c6992a077bfac')
-    routes = client.directions(coords, format="geojson")
+    routes = client.directions(coords, profile='foot-walking', 
+                                       format="geojson", 
+                                       optimize_waypoints=True,
+                                       geometry_simplify=True)
 
     return routes, 200

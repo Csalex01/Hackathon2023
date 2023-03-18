@@ -96,17 +96,18 @@ document.getElementById("search-button").addEventListener("click", async () => {
         lat: dataB.lat
     })}`)
 
+    // const routeResponse = await fetch(`https://api.openrouteservice.org/v2/directions/driving-car?api_key=5b3ce3597851110001cf62489e4d077cabd84d33bf9c6992a077bfac&start=${dataA.lat},${dataA.lon}&end=${dataB.lat},${dataB.lon}`)
+
     const routesJSON = await routeResponse.json()
     let coordinates = routesJSON.features[0].geometry.coordinates
 
-    coordinates = coordinates.map(el => epsg3857toEpsg4326(fromLonLat([el[1], el[0]])))
+    coordinates = coordinates.map(coord => transform(coord, 'EPSG:4326', 'EPSG:3857'))
 
     console.log(coordinates)
 
     let featureLine = new Feature({
         geometry: new LineString(coordinates)
     })
-
 
     let vectorLine = new VectorSource({});
     vectorLine.addFeature(featureLine);
