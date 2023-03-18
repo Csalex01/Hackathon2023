@@ -80,9 +80,33 @@ input[type="radio"] {
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 999;
+	z-index: 99999;
+    animation: popup 2s;
 }
 
+@keyframes popup {
+    0%{
+      transform: scale(1);
+    }
+    50%{
+      transform: scale(1.4);
+    }
+    60%{
+      transform: scale(1.1);
+    }
+    70%{
+      transform: scale(1.2);
+    }
+    80%{
+      transform: scale(1);
+    }
+    90%{
+      transform: scale(1.1);
+    }
+    100%{
+      transform: scale(1);
+    }
+  }
 .popup-content {
 	background-color: white;
 	padding: 20px;
@@ -98,3 +122,24 @@ button {
 	font-size: 16px;
 	cursor: pointer;
 }
+
+.popup2 {
+	display: none;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 99999;
+    animation: popup 2s;
+}
+
+.popup-content2 {
+	background-color: white;
+	padding: 20px;
+	border-radius: 10px;
+}
+  
