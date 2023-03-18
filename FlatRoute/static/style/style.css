@@ -27,3 +27,27 @@
 
     text-align: center;
 }
+
+.radio-group {
+    text-align: left;
+}
+  
+.radio-label {
+    margin-left: 10px;
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+input[type="radio"] {
+    margin-right: 10px; 
+  }
+
+  .radio-group label {
+    margin-right: 10px; 
+  }
+
+  
+  
+
+
+  
