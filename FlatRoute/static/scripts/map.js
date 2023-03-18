@@ -6,7 +6,7 @@ import TileLayer from 'https://cdn.skypack.dev/ol/layer/Tile.js'
 import VectorLayer from 'https://cdn.skypack.dev/ol/layer/Vector.js';
 import VectorSource from 'https://cdn.skypack.dev/ol/source/Vector.js';
 
-import { Style, Icon } from "https://cdn.skypack.dev/ol/style"
+import { Style, Icon, Fill, Stroke } from "https://cdn.skypack.dev/ol/style"
 
 import { Feature } from "https://cdn.skypack.dev/ol"
 
@@ -88,15 +88,22 @@ document.getElementById("search-button").addEventListener("click", async () => {
 
     map.getView().setCenter(fromLonLat([midpoint.lon, midpoint.lat]))
 
-    var start_point = new Point(0, 10);
-    var end_point = new Point(30, 0);
+    let featureLine = new Feature({
+        geometry: new LineString([fromLonLat([dataA.lon, dataA.lat]), fromLonLat([dataB.lon, dataB.lat])])
+    })
 
-    let vector = new VectorLayer();
-    vector.addFeatures([new Feature.Vector(new LineString([start_point, end_point]))]);
-    map.addLayers([vector]);
+    let vectorLine = new VectorSource({});
+    vectorLine.addFeature(featureLine);
 
-    markers.getSource().addFeature(new Feature(new Point(fromLonLat([dataA[0].lon, dataA[0].lat]))));
-    markers.getSource().addFeature(new Feature(new Point(fromLonLat([dataB[0].lon, dataB[0].lat]))));
+    var vectorLineLayer = new VectorLayer({
+        source: vectorLine,
+        style: new Style({
+            fill: new Fill({ color: '#FF0000', weight: 4 }),
+            stroke: new Stroke({ color: '#FF0000', width: 4 })
+        })
+    });
+
+    map.addLayer(vectorLineLayer);
 })
 
 
