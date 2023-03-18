@@ -1,5 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from FlatRoute import *
+import json
+import openrouteservice as ors
 
 # Initialize blueprint
 general = Blueprint("general", __name__)
@@ -10,7 +12,15 @@ def index():
 
 @general.route("/find_route")
 def find_route():
-    print(request.args.get("point_a"))    
-    print(request.args.get("point_b"))    
+    point_a = json.loads(request.args.get("point_a"))
+    point_b = json.loads(request.args.get("point_b"))
 
-    return "Success", 200
+    coords = [
+        (point_a["lat"], point_a["lon"]),
+        (point_b["lat"], point_b["lon"])
+    ]
+
+    client = ors.Client('5b3ce3597851110001cf62489e4d077cabd84d33bf9c6992a077bfac')
+    routes = client.directions(coords, format="geojson")
+
+    return routes, 200

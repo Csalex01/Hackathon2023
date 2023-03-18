@@ -71,9 +71,6 @@ document.getElementById("search-button").addEventListener("click", async () => {
     console.log(dataA)
     console.log(dataB)
 
-    const routeResponse = await fetch(`/find_route?point_a=${JSON.stringify(dataA)}?point_b=${JSON.stringify(dataB)}`)
-    console.log(await routeResponse.text())
-
     markers.getSource().addFeature(new Feature(new Point(fromLonLat([dataA.lon, dataA.lat]))));
     markers.getSource().addFeature(new Feature(new Point(fromLonLat([dataB.lon, dataB.lat]))));
 
@@ -91,9 +88,25 @@ document.getElementById("search-button").addEventListener("click", async () => {
 
     map.getView().setCenter(fromLonLat([midpoint.lon, midpoint.lat]))
 
+    const routeResponse = await fetch(`/find_route?point_a=${JSON.stringify({
+        lon: dataA.lon,
+        lat: dataA.lat
+    })}&point_b=${JSON.stringify({
+        lon: dataB.lon,
+        lat: dataB.lat
+    })}`)
+
+    const routesJSON = await routeResponse.json()
+    let coordinates = routesJSON.features[0].geometry.coordinates
+
+    coordinates = coordinates.map(el => epsg3857toEpsg4326(fromLonLat([el[1], el[0]])))
+
+    console.log(coordinates)
+
     let featureLine = new Feature({
-        geometry: new LineString([fromLonLat([dataA.lon, dataA.lat]), fromLonLat([dataB.lon, dataB.lat])])
+        geometry: new LineString(coordinates)
     })
+
 
     let vectorLine = new VectorSource({});
     vectorLine.addFeature(featureLine);
