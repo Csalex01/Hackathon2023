@@ -21,9 +21,22 @@ def find_route():
     ]
 
     client = ors.Client('5b3ce3597851110001cf62489e4d077cabd84d33bf9c6992a077bfac')
-    routes = client.directions(coords, profile='foot-walking', 
+    routes = client.directions(coords, profile='wheelchair',
                                        format="geojson", 
                                        optimize_waypoints=True,
-                                       geometry_simplify=True)
+                                       geometry_simplify=True,
+                                       options={
+                                        "avoid_features": ["ferries","steps"],
+                                        "profile_params": {
+                                            "restrictions": {
+                                                "surface_type": "cobblestone:flattened",
+                                                "track_type": "grade1",
+                                                "smoothness_type": "good",
+                                                #"maximum_sloped_curb": 0.06,
+                                                "maximum_incline": 2
+                                            }
+                                        }
+                                    }
+                              )
 
     return routes, 200
