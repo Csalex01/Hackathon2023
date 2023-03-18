@@ -72,3 +72,14 @@ document.getElementById("search-button").addEventListener("click", async () => {
     markers.getSource().addFeature(new Feature(new Point(fromLonLat([dataA[0].lon, dataA[0].lat]))));
     markers.getSource().addFeature(new Feature(new Point(fromLonLat([dataB[0].lon, dataB[0].lat]))));
 })
+
+function closePopup() {
+	document.querySelector('.popup').style.display = 'none';
+}
+
+window.onload = function() {
+	document.querySelector('.popup').style.display = 'flex';
+	
+	document.querySelector('button').addEventListener('click', closePopup);
+};
+
