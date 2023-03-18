@@ -38,21 +38,13 @@
             <button class="closeButton">Get Started</button>
         </div>
     </div>
+
     <div class="container-fluid">
         {% block content %}{% endblock content %}
     </div>
 
     <script type="module" src="{{ url_for('static', filename='scripts/utils.js') }}"></script>
     <script type="module" src="{{ url_for('static', filename='scripts/map.js') }}"></script>
-
-    <div class="popup">
-        <div class="popup-content">
-            <h1>Welcome to FlatRoute</h1>
-            <p>This app will help you find a route that has steepness of yor choice (low, medium, high).</p>
-            <p>Click the button below to get started.</p>
-            <button class="closeButton">Get Started</button>
-        </div>
-    </div>
 
 </body>
 
