@@ -3,6 +3,16 @@ import MousePosition from './ol/control/MousePosition.js';
 import { createStringXY } from './ol/coordinate.js';
 import { fromLonLat } from './ol/proj.js'
 
+function closePopup() {
+    document.querySelector('.popup').style.display = 'none';
+}
+
+window.onload = function () {
+    document.querySelector('.popup').style.display = 'flex';
+
+    document.querySelectorAll('.closeButton')[0].addEventListener('click', closePopup);
+}
+
 class HomeButtonControl extends Control {
     constructor(opt_options) {
         const options = opt_options || {}

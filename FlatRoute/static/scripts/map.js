@@ -12,7 +12,7 @@ import { Feature } from "https://cdn.skypack.dev/ol"
 
 import { Point, LineString } from "https://cdn.skypack.dev/ol/geom"
 
-import { fromLonLat } from 'https://cdn.skypack.dev/ol/proj'
+import { fromLonLat, transform } from 'https://cdn.skypack.dev/ol/proj'
 import { defaults as defaultControls } from "https://cdn.skypack.dev/ol/control"
 
 import "./utils.js"
@@ -94,4 +94,9 @@ document.getElementById("search-button").addEventListener("click", async () => {
     let vector = new VectorLayer();
     vector.addFeatures([new Feature.Vector(new LineString([start_point, end_point]))]);
     map.addLayers([vector]);
+
+    markers.getSource().addFeature(new Feature(new Point(fromLonLat([dataA[0].lon, dataA[0].lat]))));
+    markers.getSource().addFeature(new Feature(new Point(fromLonLat([dataB[0].lon, dataB[0].lat]))));
 })
+
+
