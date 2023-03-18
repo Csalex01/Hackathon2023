@@ -57,17 +57,6 @@ navigator.geolocation.getCurrentPosition(pos => {
     sessionStorage.setItem("current_location", JSON.stringify(coords))
 }, (error) => alert(error), { enableHighAccuracy: true })
 
-document.getElementById("search-button").addEventListener("click", async () => {
-    let pointA = document.getElementsByName("point_A")[0].value
-    let pointB = document.getElementsByName("point_B")[0].value
-
-    const response = await fetch(`https://nominatim.openstreetmap.org/search.php?q=${pointA}&format=jsonv2`)
-    const data = await response.json()
-    console.log(data)
-
-    console.log(markers)
-})
-
 export {
     HomeButtonControl,
     mousePositionControl,

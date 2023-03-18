@@ -71,6 +71,9 @@ document.getElementById("search-button").addEventListener("click", async () => {
     console.log(dataA)
     console.log(dataB)
 
+    const routeResponse = await fetch(`/find_route?point_a=${JSON.stringify(dataA)}?point_b=${JSON.stringify(dataB)}`)
+    console.log(await routeResponse.text())
+
     markers.getSource().addFeature(new Feature(new Point(fromLonLat([dataA.lon, dataA.lat]))));
     markers.getSource().addFeature(new Feature(new Point(fromLonLat([dataB.lon, dataB.lat]))));
 
