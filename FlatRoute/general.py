@@ -24,6 +24,10 @@ def find_route():
     routes = client.directions(coords, profile='foot-walking', 
                                        format="geojson", 
                                        optimize_waypoints=True,
-                                       geometry_simplify=True)
+                                       geometry_simplify=True,
+                                       options={
+                                        "avoid_features": ["ferries","steps"],
+                                        }
+                              )
 
     return routes, 200
