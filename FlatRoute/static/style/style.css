@@ -3,7 +3,7 @@
     padding: 0;
 }
 
-#preferences, #search-box {
+ #search-box {
     display: block;
     position: absolute;
 
@@ -23,15 +23,8 @@
     text-align: center;
 }
 
-#preferences {
-    bottom: 20px;
-    left: 20px;
-
-    width: 500px;
-}
-
 #search-box {
-    bottom: 125px;
+    bottom: 30px;
     left: 20px;
     width: 500px;
 }
