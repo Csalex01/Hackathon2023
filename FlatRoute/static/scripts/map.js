@@ -84,8 +84,12 @@ document.getElementById("search-button").addEventListener("click", async () => {
         const responseB = await fetch(`https://nominatim.openstreetmap.org/search.php?q=${pointB}&format=jsonv2`)
         dataB = await responseB.json()
 
+        console.log(dataA)
+        console.log(dataB)
+
         dataA = dataA[0]
         dataB = dataB[0]
+
     } else {
         dataA = {
             lon: dataA[0],
@@ -117,6 +121,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
     console.log(`Distance: ${dist}`)
 
     map.getView().setCenter(fromLonLat([midpoint.lon, midpoint.lat]))
+    map.getView().setZoom(map.getView().getZoom() - dist * 2)
 
     const routeResponse = await fetch(`/find_route?point_a=${JSON.stringify({
         lon: dataA.lon,

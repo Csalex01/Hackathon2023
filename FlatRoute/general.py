@@ -26,8 +26,8 @@ def find_route():
                                        optimize_waypoints=True,
                                        geometry_simplify=True,
                                        options={
-                                        "avoid_features": ["ferries","steps"],
-                                        "profile_params": {
+                                       "avoid_features": ["ferries","steps"],
+                                       "profile_params": {
                                             "restrictions": {
                                                 "surface_type": "cobblestone:flattened",
                                                 "track_type": "grade1",
